@@ -1,0 +1,34 @@
+{
+  "name": "trie-memoize",
+  "version": "1.0.0",
+  "description": "A memoizer in which each argument represents a new key, creating a trie of caches",
+  "main": "dist/cjs/index.js",
+  "module": "dist/es/index.js",
+  "esnext": "src/index.js",
+  "repository": "https://github.com/jaredLunde/trie-memoize",
+  "author": "Jared Lunde <jared@BeStellar.co> (https://BeStellar.co)",
+  "license": "MIT",
+  "sideEffects": false,
+  "private": false,
+  "devDependencies": {
+    "@stellar-apps/babel-preset-es": "^1.0.3",
+    "prettier": "^1.16.4"
+  },
+  "scripts": {
+    "build": "npm run build:es && npm run build:cjs",
+    "build:es": "rm -rf dist/es && cross-env NODE_ENV=production BABEL_ENV=es babel src --out-dir dist/es && npm run prettier:es",
+    "build:cjs": "rm -rf dist/cjs && cross-env NODE_ENV=production BABEL_ENV=cjs babel src --out-dir dist/cjs && npm run prettier:cjs",
+    "prettier:es": "prettier --single-quote --no-semi --no-bracket-spacing --trailing-comma es5 --write --tab-width 2 \"dist/es/**/*.js\"",
+    "prettier:cjs": "prettier --single-quote --no-semi --no-bracket-spacing --trailing-comma es5 --write --tab-width 2 \"dist/cjs/**/*.js\""
+  },
+  "dependencies": {
+    "is-plain-object": "^2.0.4"
+  },
+  "keywords": [
+    "trie",
+    "memo",
+    "memoizer",
+    "memoization",
+    "cache"
+  ]
+}
