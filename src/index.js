@@ -5,10 +5,7 @@ const createCache = obj => {
   if (isPlainObject(obj)) {
     return {
       get: k => obj[k],
-      set: (k, v) => {
-        obj[k] = v
-        return v
-      }
+      set: (k, v) => obj[k] = v
     }
   }
 

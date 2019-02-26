@@ -1,6 +1,6 @@
 {
   "name": "trie-memoize",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A memoizer in which each argument represents a new key, creating a trie of caches",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
