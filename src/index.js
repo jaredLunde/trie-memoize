@@ -3,9 +3,10 @@ import isPlainObject from 'is-plain-object'
 
 const createCache = obj => {
   if (isPlainObject(obj)) {
+    const cache = {}
     return {
-      get: k => obj[k],
-      set: (k, v) => obj[k] = v
+      get: k => cache[k],
+      set: (k, v) => cache[k] = v
     }
   }
 
