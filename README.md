@@ -17,8 +17,8 @@ const m3 = memoize(
   [Map, Map, WeakMap], 
   (v1, v2, v3) => `${JSON.stringify(v1)}-${JSON.stringify(v1)}-${JSON.stringify(v3)}`
 )
-let v1 = {}, v2 = {}, v3 = 'foo'
-m3(v1, v2, v3)  // {}-{}-"foo"
+let v1 = {}, v2 = 'foo', v3 = {}
+m3(v1, v2, v3)  // {}-"foo"-{}
 ```
 
 ### `memoize(caches <Array>, fn <Function>)`
