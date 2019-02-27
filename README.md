@@ -14,7 +14,7 @@ const m2 = memoize([{}, Map], (v1, v2) => `${v1}-${v2}`)
 m2('foo', 'bar')  // foo-bar
 
 const m3 = memoize(
-  [Map, Map, WeakMap], 
+  [WeakMap, Map, WeakMap], 
   (v1, v2, v3) => `${JSON.stringify(v1)}-${JSON.stringify(v1)}-${JSON.stringify(v3)}`
 )
 let v1 = {}, v2 = 'foo', v3 = {}
