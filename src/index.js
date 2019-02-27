@@ -65,9 +65,9 @@ const Cache = constructors => {
 
       for (i = 0; i < args.length - 1; i++) {
         let map = node.get(args[i])
-        
+
         if (map === void 0) {
-          map = createCache(constructors[i])
+          map = createCache(constructors[i + 1])
           node.set(args[i], map)
           node = map
         }
