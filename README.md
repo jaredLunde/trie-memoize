@@ -27,7 +27,7 @@ m3(v1, v2, v3)  // {}-"foo"-{}
       The first array element will be the cache for the first argument of the function,
       call, and so on. Therefore, the length of this array must be the same as the 
       length of arguments your memoized function accepts.
-    - You may provide your own cache (e.g. not `Map`, `WeakMap`, `{}`). The only requirement
+    - You may provide your own cache (i.e. not `Map`, `WeakMap`, `{}`). The only requirement
       is that it has `get` and `set` methods.
 - `fn` `<Function>` 
     - The function being memoized
