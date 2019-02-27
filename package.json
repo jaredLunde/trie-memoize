@@ -27,6 +27,7 @@
   "keywords": [
     "trie",
     "memo",
+    "memoize",
     "memoizer",
     "memoization",
     "cache"

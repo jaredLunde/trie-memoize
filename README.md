@@ -1,6 +1,6 @@
 # trie-memoize
-A memoizer in which each function argument represents a new key, creating a trie of caches
-as defined by your setup.
+A memoization algorithm in which each function argument represents a new key, creating a 
+trie of caches - the depth of which defined by your setup.
 
 ## Installation
 `yarn add trie-memoize` or `npm i trie-memoize`
