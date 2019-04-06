@@ -14,8 +14,9 @@ const createCache = obj => {
 }
 
 const Cache = constructors => {
-  const depth = constructors.length
-  const baseCache = createCache(constructors[0])
+  const
+    depth = constructors.length,
+    baseCache = createCache(constructors[0])
   let get, set
 
   // quicker access for one and two-argument functions
@@ -47,10 +48,10 @@ const Cache = constructors => {
     }
   }
   else {
-    let i
+    let i, node
     
     get = args => {
-      let node = baseCache
+      node = baseCache
       
       for (i = 0; i < args.length; i++) {
         node = node.get(args[i])
@@ -61,7 +62,7 @@ const Cache = constructors => {
     }
 
     set = (args, value) => {
-      let node = baseCache
+      node = baseCache
 
       for (i = 0; i < args.length - 1; i++) {
         let map = node.get(args[i])
@@ -84,11 +85,20 @@ const Cache = constructors => {
   return {get, set}
 }
 
-
-function memoize (mapConstructors, fn) {
+const memoize = (mapConstructors, fn) => {
   const cache = Cache(mapConstructors)
 
   return function () {
+    if (__DEV__) {
+      if (arguments.length !== mapConstructors.length) {
+        throw (
+          `[trie-memoize] Invalid argument count: ${arguments.length}. The number of `
+          + `arguments must be constant and match the number of maps this memoizer was `
+          + `constructed with (${mapConstructors.length})`
+        )
+      }
+    }
+
     const item = cache.get(arguments)
     return item === void 0 ? cache.set(arguments, fn.apply(this, arguments)) : item
   }
