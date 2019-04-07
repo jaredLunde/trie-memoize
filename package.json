@@ -1,6 +1,6 @@
 {
   "name": "trie-memoize",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A memoizer in which each argument represents a new key, creating a trie of caches",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
@@ -19,7 +19,8 @@
     "build:es": "rm -rf dist/es && cross-env NODE_ENV=production BABEL_ENV=es babel src --out-dir dist/es && npm run prettier:es",
     "build:cjs": "rm -rf dist/cjs && cross-env NODE_ENV=production BABEL_ENV=cjs babel src --out-dir dist/cjs && npm run prettier:cjs",
     "prettier:es": "prettier --single-quote --no-semi --no-bracket-spacing --trailing-comma es5 --write --tab-width 2 \"dist/es/**/*.js\"",
-    "prettier:cjs": "prettier --single-quote --no-semi --no-bracket-spacing --trailing-comma es5 --write --tab-width 2 \"dist/cjs/**/*.js\""
+    "prettier:cjs": "prettier --single-quote --no-semi --no-bracket-spacing --trailing-comma es5 --write --tab-width 2 \"dist/cjs/**/*.js\"",
+    "prepublishOnly": "yarn build"
   },
   "dependencies": {
     "is-plain-object": "^2.0.4"
