@@ -2,7 +2,7 @@ import isPlainObject from 'is-plain-object'
 
 
 const createCache = obj => {
-  if (isPlainObject(obj)) {
+  if (isPlainObject(obj) === true) {
     const cache = {}
     return {
       get: k => cache[k],
@@ -89,16 +89,6 @@ const memoize = (mapConstructors, fn) => {
   const cache = Cache(mapConstructors)
 
   return function () {
-    // if (__DEV__) {
-      // if (arguments.length !== mapConstructors.length) {
-      //   throw (
-      //     `[trie-memoize] Invalid argument count: ${arguments.length}. The number of `
-      //     + `arguments must be constant and match the number of maps this memoizer was `
-      //     + `constructed with (${mapConstructors.length})`
-      //   )
-      // }
-    // }
-
     const item = cache.get(arguments)
     return item === void 0 ? cache.set(arguments, fn.apply(this, arguments)) : item
   }
