@@ -1,5 +1,7 @@
-# Remote Sync
 node_modules
-examples
 .babelrc
 .idea
+**/*.test.js
+**/test.js
+.eslintrc
+.eslintignore

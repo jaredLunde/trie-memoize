@@ -12,6 +12,7 @@
   "private": false,
   "devDependencies": {
     "@stellar-apps/babel-preset-es": "^1.0.3",
+    "ava": "^2.2.0",
     "babel-eslint": "^10.0.2",
     "eslint": "^6.1.0",
     "husky": "^3.0.2",
@@ -20,15 +21,26 @@
   },
   "scripts": {
     "build": "npm run build:es && npm run build:cjs",
-    "build:es": "rm -rf dist/es && cross-env NODE_ENV=production BABEL_ENV=es babel src --out-dir dist/es && npm run prettier:es",
-    "build:cjs": "rm -rf dist/cjs && cross-env NODE_ENV=production BABEL_ENV=cjs babel src --out-dir dist/cjs && npm run prettier:cjs",
+    "build:es": "rm -rf dist/es && cross-env NODE_ENV=production BABEL_ENV=es babel src --out-dir dist/es",
+    "build:cjs": "rm -rf dist/cjs && cross-env NODE_ENV=production BABEL_ENV=cjs babel src --out-dir dist/cjs",
     "lint": "eslint src",
     "prettier:es": "prettier --single-quote --no-semi --no-bracket-spacing --trailing-comma es5 --write --tab-width 2 \"dist/es/**/*.js\"",
     "prettier:cjs": "prettier --single-quote --no-semi --no-bracket-spacing --trailing-comma es5 --write --tab-width 2 \"dist/cjs/**/*.js\"",
-    "prepublishOnly": "yarn lint && yarn build"
+    "prettier": "yarn prettier:cjs && yarn prettier:es",
+    "prepublishOnly": "yarn lint && yarn build && npm run prettier",
+    "test": "yarn build:cjs && BABEL_ENV=cjs ava -v",
+    "validate": "yarn test && yarn lint"
   },
   "dependencies": {
     "is-plain-object": "^2.0.4"
+  },
+  "ava": {
+    "babel": false,
+    "compileEnhancements": false,
+    "files": [
+      "dist/cjs/**/*.test.js",
+      "dist/cjs/**/test.js"
+    ]
   },
   "husky": {
     "hooks": {
