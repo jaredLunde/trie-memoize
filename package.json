@@ -12,18 +12,31 @@
   "private": false,
   "devDependencies": {
     "@stellar-apps/babel-preset-es": "^1.0.3",
+    "babel-eslint": "^10.0.2",
+    "eslint": "^6.1.0",
+    "husky": "^3.0.2",
+    "lint-staged": "^9.2.1",
     "prettier": "^1.16.4"
   },
   "scripts": {
     "build": "npm run build:es && npm run build:cjs",
     "build:es": "rm -rf dist/es && cross-env NODE_ENV=production BABEL_ENV=es babel src --out-dir dist/es && npm run prettier:es",
     "build:cjs": "rm -rf dist/cjs && cross-env NODE_ENV=production BABEL_ENV=cjs babel src --out-dir dist/cjs && npm run prettier:cjs",
+    "lint": "eslint src",
     "prettier:es": "prettier --single-quote --no-semi --no-bracket-spacing --trailing-comma es5 --write --tab-width 2 \"dist/es/**/*.js\"",
     "prettier:cjs": "prettier --single-quote --no-semi --no-bracket-spacing --trailing-comma es5 --write --tab-width 2 \"dist/cjs/**/*.js\"",
-    "prepublishOnly": "yarn build"
+    "prepublishOnly": "yarn lint && yarn build"
   },
   "dependencies": {
     "is-plain-object": "^2.0.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": "eslint"
   },
   "keywords": [
     "trie",
