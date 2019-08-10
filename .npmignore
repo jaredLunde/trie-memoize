@@ -1,9 +1,0 @@
-node_modules
-.babelrc
-.idea
-.eslintignore
-.prettierrc
-**/*.test.js
-**/test.js
-.eslintrc
-tsconfig.json

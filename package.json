@@ -1,6 +1,6 @@
 {
   "name": "trie-memoize",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "author": "Jared Lunde <jared@BeStellar.co> (https://BeStellar.co)",
   "license": "MIT",
   "devDependencies": {
@@ -24,6 +24,10 @@
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
   "types": "dist/types/index.d.ts",
+  "files": [
+    "/dist",
+    "/src"
+  ],
   "scripts": {
     "build": "yarn build:types && yarn build:es && yarn build:cjs",
     "build:es": "rimraf dist/es && cross-env NODE_ENV=production BABEL_ENV=es babel src --extensions .ts,.tsx,.js  --ignore \"**/*.test.js\",\"**/test.js\" --out-dir dist/es",
