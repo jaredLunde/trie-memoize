@@ -10,7 +10,9 @@
           {
             "env": {
               "useBuiltIns": false,
-              "targets": {"node": "8"}
+              "targets": {
+                "node": "8"
+              }
             },
             "runtime": false
           }
@@ -25,7 +27,9 @@
             "env": {
               "useBuiltIns": false,
               "modules": false,
-              "targets": {"browsers": ">5% in US"}
+              "targets": {
+                "browsers": ">5% in US"
+              }
             },
             "runtime": false
           }
