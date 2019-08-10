@@ -1,6 +1,6 @@
 {
   "name": "trie-memoize",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "author": "Jared Lunde <jared@BeStellar.co> (https://BeStellar.co)",
   "license": "MIT",
   "devDependencies": {
