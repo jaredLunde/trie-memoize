@@ -9,7 +9,8 @@
   ],
   "rules": {
     "no-console": "off",
-    "no-prototype-builtins": "off"
+    "no-prototype-builtins": "off",
+    "no-undef": "off"
   },
   "env": {
     "browser": true,

@@ -1,18 +1,14 @@
 import test from 'ava'
 import memoize from './index'
 
-
 const stringMaps = [{}, Map]
 const objectMaps = [Map, WeakMap]
 
 test('single argument -> string', t => {
   for (let map of stringMaps) {
-    const fn = memoize(
-      [map],
-      foo => {
-        return [foo]
-      }
-    )
+    const fn = memoize([map], foo => {
+      return [foo]
+    })
 
     const result = fn('foo')
     t.is(result, fn('foo'))
@@ -23,12 +19,9 @@ test('single argument -> string', t => {
 
 test('single argument -> object', t => {
   for (let map of objectMaps) {
-    const fn = memoize(
-      [map],
-      foo => {
-        return [foo]
-      }
-    )
+    const fn = memoize([map], foo => {
+      return [foo]
+    })
 
     const val = {}
     const result = fn(val)
@@ -41,12 +34,9 @@ test('single argument -> object', t => {
 test('two arguments -> string', t => {
   for (let map1 of stringMaps) {
     for (let map2 of stringMaps) {
-      const fn = memoize(
-        [map1, map2],
-        foo => {
-          return [foo]
-        }
-      )
+      const fn = memoize([map1, map2], foo => {
+        return [foo]
+      })
 
       const result = fn('foo', 'bar')
       t.is(result, fn('foo', 'bar'))
@@ -60,14 +50,12 @@ test('two arguments -> string', t => {
 test('two arguments -> object', t => {
   for (let map1 of objectMaps) {
     for (let map2 of objectMaps) {
-      const fn = memoize(
-        [map1, map2],
-        foo => {
-          return [foo]
-        }
-      )
+      const fn = memoize([map1, map2], foo => {
+        return [foo]
+      })
 
-      const valA = {}, valB = {}
+      const valA = {},
+        valB = {}
       const result = fn(valA, valB)
       t.is(result, fn(valA, valB))
       t.is(result[0], valA)
@@ -81,12 +69,9 @@ test('several arguments -> string', t => {
   for (let map1 of stringMaps) {
     for (let map2 of stringMaps) {
       for (let map3 of stringMaps) {
-        const fn = memoize(
-          [map1, map2, map3],
-          foo => {
-            return [foo]
-          }
-        )
+        const fn = memoize([map1, map2, map3], foo => {
+          return [foo]
+        })
 
         const result = fn('foo', 'bar', 'baz')
         t.is(result, fn('foo', 'bar', 'baz'))
@@ -102,14 +87,13 @@ test('several arguments -> object', t => {
   for (let map1 of objectMaps) {
     for (let map2 of objectMaps) {
       for (let map3 of objectMaps) {
-        const fn = memoize(
-          [map1, map2, map3],
-          foo => {
-            return [foo]
-          }
-        )
+        const fn = memoize([map1, map2, map3], foo => {
+          return [foo]
+        })
 
-        const valA = {}, valB = {}, valC = {}
+        const valA = {},
+          valB = {},
+          valC = {}
         const result = fn(valA, valB, valC)
         t.is(result, fn(valA, valB, valC))
         t.is(result[0], valA)

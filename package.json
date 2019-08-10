@@ -1,38 +1,43 @@
 {
   "name": "trie-memoize",
-  "version": "1.0.8",
-  "description": "A memoizer in which each argument represents a new key, creating a trie of caches",
-  "main": "dist/cjs/index.js",
-  "module": "dist/es/index.js",
-  "esnext": "src/index.js",
-  "repository": "https://github.com/jaredLunde/trie-memoize",
+  "version": "1.0.9",
   "author": "Jared Lunde <jared@BeStellar.co> (https://BeStellar.co)",
   "license": "MIT",
-  "sideEffects": false,
-  "private": false,
   "devDependencies": {
-    "@stellar-apps/babel-preset-es": "^1.0.3",
+    "@babel/preset-typescript": "^7.3.3",
+    "@stellar-apps/babel-preset-es": "^1.0.4",
     "ava": "^2.2.0",
     "babel-eslint": "^10.0.2",
+    "cross-env": "^5.2.0",
     "eslint": "^6.1.0",
     "husky": "^3.0.2",
     "lint-staged": "^9.2.1",
-    "prettier": "^1.16.4"
-  },
-  "scripts": {
-    "build": "npm run build:es && npm run build:cjs",
-    "build:es": "rm -rf dist/es && cross-env NODE_ENV=production BABEL_ENV=es babel src --out-dir dist/es",
-    "build:cjs": "rm -rf dist/cjs && cross-env NODE_ENV=production BABEL_ENV=cjs babel src --out-dir dist/cjs",
-    "lint": "eslint src",
-    "prettier:es": "prettier --single-quote --no-semi --no-bracket-spacing --trailing-comma es5 --write --tab-width 2 \"dist/es/**/*.js\"",
-    "prettier:cjs": "prettier --single-quote --no-semi --no-bracket-spacing --trailing-comma es5 --write --tab-width 2 \"dist/cjs/**/*.js\"",
-    "prettier": "yarn prettier:cjs && yarn prettier:es",
-    "prepublishOnly": "yarn lint && yarn build && npm run prettier",
-    "test": "yarn build:cjs && BABEL_ENV=cjs ava -v",
-    "validate": "yarn test && yarn lint"
+    "prettier": "^1.18.2",
+    "pretty-quick": "^1.11.1",
+    "rimraf": "^2.6.3",
+    "typescript": "^3.5.3"
   },
   "dependencies": {
-    "is-plain-object": "^2.0.4"
+    "is-plain-object": "^3.0.0"
+  },
+  "peerDependencies": {},
+  "main": "dist/cjs/index.js",
+  "module": "dist/es/index.js",
+  "types": "dist/types/index.d.ts",
+  "scripts": {
+    "build": "yarn build:types && yarn build:es && yarn build:cjs",
+    "build:es": "rimraf dist/es && cross-env NODE_ENV=production BABEL_ENV=es babel src --extensions .ts,.tsx,.js  --ignore \"**/*.test.js\",\"**/test.js\" --out-dir dist/es",
+    "build:cjs": "rimraf dist/cjs && cross-env NODE_ENV=production BABEL_ENV=cjs babel src --extensions .ts,.tsx,.js --out-dir dist/cjs",
+    "build:types": "rimraf dist/types && tsc -p tsconfig.json -d --outDir dist/types  && rimraf dist/types/**/*.js",
+    "check-types": "tsc --noEmit --isolatedModules -p tsconfig.json",
+    "format": "yarn format:src && yarn format:cjs && yarn format:es",
+    "format:src": "prettier --write \"src/**/*.js\" \"src/**/*.ts\"",
+    "format:es": "prettier --write \"dist/es/**/*.js\"",
+    "format:cjs": "prettier --write \"dist/es/**/*.js\"",
+    "lint": "eslint src --ext .jsx,.js,.ts,.tsx",
+    "prepublishOnly": "yarn lint && yarn build && rimraf dist/**/*.test.js && rimraf dist/**/test.js && yarn format",
+    "test": "yarn build:cjs && ava -v",
+    "validate": "yarn check-types && yarn lint && yarn test && yarn format:src"
   },
   "ava": {
     "babel": false,
@@ -44,18 +49,13 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged && yarn check-types"
     }
   },
   "lint-staged": {
-    "*.js": "eslint"
-  },
-  "keywords": [
-    "trie",
-    "memo",
-    "memoize",
-    "memoizer",
-    "memoization",
-    "cache"
-  ]
+    "*.{js,jsx,ts,tsx}": [
+      "eslint",
+      "pretty-quick --staged"
+    ]
+  }
 }
