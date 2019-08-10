@@ -1,8 +1,23 @@
 {
   "name": "trie-memoize",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "author": "Jared Lunde <jared@BeStellar.co> (https://BeStellar.co)",
   "license": "MIT",
+  "main": "dist/cjs/index.js",
+  "module": "dist/es/index.js",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "/dist",
+    "/src"
+  ],
+  "keywords": [
+    "trie",
+    "memo",
+    "memoize",
+    "memoizer",
+    "memoization",
+    "cache"
+  ],
   "devDependencies": {
     "@babel/preset-typescript": "^7.3.3",
     "@stellar-apps/babel-preset-es": "^1.0.4",
@@ -21,13 +36,6 @@
     "is-plain-object": "^3.0.0"
   },
   "peerDependencies": {},
-  "main": "dist/cjs/index.js",
-  "module": "dist/es/index.js",
-  "types": "dist/types/index.d.ts",
-  "files": [
-    "/dist",
-    "/src"
-  ],
   "scripts": {
     "build": "yarn build:types && yarn build:cjs && yarn build:es",
     "build:cjs": "cross-env NODE_ENV=production BABEL_ENV=cjs babel src --out-dir dist/cjs --extensions .ts,.tsx,.js --ignore \"**/*.test.js\",\"**/test.js\",\"**/*.test.ts\",\"**/test.ts\" --delete-dir-on-start",
