@@ -6,3 +6,4 @@ node_modules
 **/*.test.js
 **/test.js
 .eslintrc
+tsconfig.json

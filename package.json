@@ -35,7 +35,7 @@
     "format:es": "prettier --write \"dist/es/**/*.js\"",
     "format:cjs": "prettier --write \"dist/es/**/*.js\"",
     "lint": "eslint src --ext .jsx,.js,.ts,.tsx",
-    "prepublishOnly": "yarn lint && yarn build && rimraf dist/**/*.test.js && rimraf dist/**/test.js && yarn format",
+    "prepublishOnly": "yarn lint && yarn build && yarn format",
     "test": "yarn build:cjs && ava -v",
     "validate": "yarn check-types && yarn lint && yarn test && yarn format:src"
   },
