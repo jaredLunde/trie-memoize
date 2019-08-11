@@ -23,7 +23,6 @@
   "devDependencies": {
     "@babel/preset-typescript": "^7.3.3",
     "@stellar-apps/babel-preset-es": "^1.0.4",
-    "ava": "^2.2.0",
     "babel-eslint": "^10.0.2",
     "cross-env": "^5.2.0",
     "eslint": "^6.1.0",
@@ -35,7 +34,9 @@
     "typescript": "^3.5.3"
   },
   "dependencies": {
-    "is-plain-object": "^3.0.0"
+    "eslint-plugin-jest": "^22.15.0",
+    "is-plain-object": "^3.0.0",
+    "jest": "^24.8.0"
   },
   "peerDependencies": {},
   "scripts": {
@@ -51,15 +52,8 @@
     "format:src": "prettier --write \"src/**/*.{ts,js}\"",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
     "prepublishOnly": "npm run lint && npm run build && npm run format",
-    "test": "npm run build:tests && ava -v && rimraf .tests",
+    "test": "BABEL_ENV=cjs jest",
     "validate": "npm run check-types && npm run lint && npm run test && npm run format:src"
-  },
-  "ava": {
-    "babel": false,
-    "compileEnhancements": false,
-    "files": [
-      ".tests/**{/,.}test.{ts,js}"
-    ]
   },
   "husky": {
     "hooks": {
