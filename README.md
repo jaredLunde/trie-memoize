@@ -1,4 +1,6 @@
 # trie-memoize
+[![Build Status](https://travis-ci.org/jaredLunde/trie-memoize.svg?branch=master)](https://travis-ci.org/jaredLunde/trie-memoize)
+
 A memoization algorithm in which each function argument represents a new
 key in a mapping, creating a trie of caches - the depth of which defined
 by your setup. As such, it is incredibly fast with `O(n arguments)` lookup
