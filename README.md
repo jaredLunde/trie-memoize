@@ -1,5 +1,6 @@
 # trie-memoize
 [![Build Status](https://travis-ci.org/jaredLunde/trie-memoize.svg?branch=master)](https://travis-ci.org/jaredLunde/trie-memoize)
+[![codecov](https://codecov.io/gh/jaredLunde/trie-memoize/branch/master/graph/badge.svg)](https://codecov.io/gh/jaredLunde/trie-memoize)
 
 A memoization algorithm in which each function argument represents a new
 key in a mapping, creating a trie of caches - the depth of which defined
