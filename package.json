@@ -10,7 +10,7 @@
     "/dist",
     "/types"
   ],
-  "description": "",
+  "description": "A memoization algorithm in which each function argument represents a new key, creating a trie of caches as defined by the array in your first argument.",
   "keywords": [
     "trie",
     "memo",
