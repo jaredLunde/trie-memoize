@@ -1,2 +1,2 @@
-declare function memoize(mapConstructors: Object[], fn: Function): Function;
-export default memoize;
+declare const _default: "hello world";
+export default _default;

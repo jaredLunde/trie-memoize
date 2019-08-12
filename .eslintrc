@@ -5,7 +5,8 @@
     "sourceType": "module"
   },
   "extends": [
-    "eslint:recommended"
+    "eslint:recommended",
+    "plugin:jest/recommended"
   ],
   "rules": {
     "no-console": "off",
@@ -15,9 +16,22 @@
   "env": {
     "browser": true,
     "node": true,
-    "es6": true
+    "es6": true,
+    "jest/globals": true
   },
   "globals": {
     "__DEV__": true
-  }
+  },
+  "overrides": [
+    {
+      "files": ["**/test.js", "**/*.test.js"],
+      "settings": {
+        "import/resolver": {
+          "jest": {
+            "jestConfigFile": "./jest.config.js"
+          }
+        }
+      }
+    }
+  ]
 }

@@ -1,12 +1,19 @@
 {
   "include": ["src"],
-  "exclude": ["node_modules", "**/*.test.js", "**/test.js"],
+  "exclude": ["**/*.test.js", "**/test.js"],
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es2017",
+    "lib": [
+      "esnext"
+    ],
     "moduleResolution": "node",
     "strict": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noFallthroughCasesInSwitch": true,
+    "noEmitOnError": true,
     "typeRoots": [
       "./src/types/*",
       "./node_modules/@types/*",
