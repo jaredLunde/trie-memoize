@@ -43,6 +43,7 @@ number of arguments is known and constant.
 const m1 = memoize([{}], v => v.toUpperCase())
 m1('foo') // FOO uncached
 m1('foo') // FOO cached
+
 const m2 = memoize([{}, Map], (v1, v2) => `${v1}-${v2}`)
 m2('foo', 'bar') // foo-bar, uncached
 m2('foo', 'bar') // foo-bar, cached
@@ -52,9 +53,10 @@ const m3 = memoize(
   (v1, v2, v3) =>
     `${JSON.stringify(v1)}-${JSON.stringify(v1)}-${JSON.stringify(v3)}`
 )
-let v1 = {},
-  v2 = 'foo',
-  v3 = {}
+
+const v1 = {}
+const v2 = 'foo'
+const v3 = {}
 m3(v1, v2, v3) // {}-"foo"-{} uncached
 m3(v1, v2, v3) // {}-"foo"-{} cached
 ```
