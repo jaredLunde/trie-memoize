@@ -1,23 +1,21 @@
 {
   "include": ["src"],
-  "exclude": ["**/*.test.js", "**/test.js"],
+  "exclude": ["src/**/*.test.ts", "src/**/test.ts"],
   "compilerOptions": {
-    "target": "es2017",
+    "target": "es5",
     "lib": [
       "esnext"
+      // "dom",
+      // "dom.iterable"
     ],
     "moduleResolution": "node",
-    "strict": true,
+    "strictNullChecks": true,
     "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noFallthroughCasesInSwitch": true,
-    "noEmitOnError": true,
-    "typeRoots": [
-      "./src/types/*",
-      "./node_modules/@types/*",
-      "./node_modules/*"
-    ]
+    "noEmitOnError": true
   }
 }

@@ -1,36 +1,55 @@
-import isPlainObject from 'is-plain-object'
-
-const createCache = (obj: any) => {
-  if (isPlainObject(obj)) {
-    const cache: any = {}
-    return {
-      get: (k: any) => cache[k],
-      set: (k: any, v: any) => (cache[k] = v),
-    }
-  }
-
-  return new obj()
+export interface MapLike {
+  new (...args: any[])
 }
 
-const Cache = (constructors: Object[]) => {
+export type CacheConstructor =
+  | MapConstructor
+  | WeakMapConstructor
+  | MapLike
+  | Record<any, any>
+
+export interface Cache {
+  set: (k: any, v: any) => any
+  get: (k: any) => any
+}
+
+const createCache = (obj: CacheConstructor): Cache => {
+  try {
+    // @ts-ignore
+    return new obj()
+  } catch (e) {
+    const cache = {}
+
+    return {
+      set(k, v): void {
+        cache[k] = v
+      },
+      get(k): any {
+        return cache[k]
+      },
+    }
+  }
+}
+
+const Cache = (constructors: CacheConstructor[]): Cache => {
   const depth = constructors.length,
     baseCache = createCache(constructors[0])
   let get, set
 
   // quicker access for one and two-argument functions
   if (depth === 1) {
-    get = (k: any) => baseCache.get(k[0])
-    set = (k: any, v: any) => {
-      baseCache.set(k[0], v)
+    get = (args: IArguments): any => baseCache.get(args[0])
+    set = (args: IArguments, v: any): any => {
+      baseCache.set(args[0], v)
       return v
     }
   } else if (depth === 2) {
-    get = (args: IArguments) => {
+    get = (args: IArguments): any => {
       const base = baseCache.get(args[0])
       return base === void 0 ? base : base.get(args[1])
     }
 
-    set = (args: IArguments, value: any) => {
+    set = (args: IArguments, value: any): any => {
       const base = baseCache.get(args[0])
       if (base === void 0) {
         const map = createCache(constructors[1])
@@ -45,7 +64,7 @@ const Cache = (constructors: Object[]) => {
   } else {
     let i, node
 
-    get = (args: IArguments) => {
+    get = (args: IArguments): any => {
       node = baseCache
 
       for (i = 0; i < args.length; i++) {
@@ -56,7 +75,7 @@ const Cache = (constructors: Object[]) => {
       return node
     }
 
-    set = (args: IArguments, value: any) => {
+    set = (args: IArguments, value: any): any => {
       node = baseCache
 
       for (i = 0; i < args.length - 1; i++) {
@@ -79,7 +98,10 @@ const Cache = (constructors: Object[]) => {
   return {get, set}
 }
 
-function memoize(mapConstructors: Object[], fn: Function): Function {
+function memoize(
+  mapConstructors: CacheConstructor[],
+  fn: (...args: any[]) => any
+): (...args: any[]) => any {
   const cache = Cache(mapConstructors)
 
   return function(): any {

@@ -4,8 +4,8 @@ const stringMaps = [{}, Map]
 const objectMaps = [Map, WeakMap]
 
 test('single argument -> string', () => {
-  for (let map of stringMaps) {
-    const fn = memoize([map], foo => {
+  for (const map of stringMaps) {
+    const fn = memoize([map], (foo: string): string[] => {
       return [foo]
     })
 
@@ -17,7 +17,7 @@ test('single argument -> string', () => {
 })
 
 test('single argument -> object', () => {
-  for (let map of objectMaps) {
+  for (const map of objectMaps) {
     const fn = memoize([map], foo => {
       return [foo]
     })
@@ -31,8 +31,8 @@ test('single argument -> object', () => {
 })
 
 test('two arguments -> string', () => {
-  for (let map1 of stringMaps) {
-    for (let map2 of stringMaps) {
+  for (const map1 of stringMaps) {
+    for (const map2 of stringMaps) {
       const fn = memoize([map1, map2], foo => {
         return [foo]
       })
@@ -47,8 +47,8 @@ test('two arguments -> string', () => {
 })
 
 test('two arguments -> object', () => {
-  for (let map1 of objectMaps) {
-    for (let map2 of objectMaps) {
+  for (const map1 of objectMaps) {
+    for (const map2 of objectMaps) {
       const fn = memoize([map1, map2], foo => {
         return [foo]
       })
@@ -65,9 +65,9 @@ test('two arguments -> object', () => {
 })
 
 test('several arguments -> string', () => {
-  for (let map1 of stringMaps) {
-    for (let map2 of stringMaps) {
-      for (let map3 of stringMaps) {
+  for (const map1 of stringMaps) {
+    for (const map2 of stringMaps) {
+      for (const map3 of stringMaps) {
         const fn = memoize([map1, map2, map3], foo => {
           return [foo]
         })
@@ -83,9 +83,9 @@ test('several arguments -> string', () => {
 })
 
 test('several arguments -> object', () => {
-  for (let map1 of objectMaps) {
-    for (let map2 of objectMaps) {
-      for (let map3 of objectMaps) {
+  for (const map1 of objectMaps) {
+    for (const map2 of objectMaps) {
+      for (const map3 of objectMaps) {
         const fn = memoize([map1, map2, map3], foo => {
           return [foo]
         })

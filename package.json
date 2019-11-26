@@ -1,15 +1,11 @@
 {
   "name": "trie-memoize",
-  "version": "1.0.15",
-  "author": "Jared Lunde <jared@BeStellar.co> (https://jaredLunde.com)",
+  "version": "1.0.16",
+  "homepage": "https://github.com/jaredLunde/trie-memoize#readme",
+  "repository": "github:jaredLunde/trie-memoize",
+  "bugs": "https://github.com/jaredLunde/trie-memoize/issues",
+  "author": "Jared Lunde <jared.lunde@gmail.com> (https://jaredLunde.com)",
   "license": "MIT",
-  "main": "dist/cjs/index.js",
-  "module": "dist/es/index.js",
-  "types": "types/index.d.ts",
-  "files": [
-    "/dist",
-    "/types"
-  ],
   "description": "A memoization algorithm in which each function argument represents a new key, creating a trie of caches as defined by the array in your first argument.",
   "keywords": [
     "trie",
@@ -20,40 +16,23 @@
     "cache",
     "trie memoize"
   ],
+  "main": "dist/cjs/index.js",
+  "module": "dist/es/index.js",
+  "files": [
+    "/dist"
+  ],
   "sideEffects": false,
-  "devDependencies": {
-    "@lunde/babel-preset-es": "^1.0.1",
-    "babel-eslint": "^10.0.2",
-    "cross-env": "^5.2.0",
-    "eslint": "^6.1.0",
-    "eslint-import-resolver-jest": "^2.1.2",
-    "eslint-plugin-jest": "^22.15.0",
-    "husky": "^3.0.3",
-    "jest": "^24.8.0",
-    "lint-staged": "^9.2.1",
-    "prettier": "^1.18.2",
-    "pretty-quick": "^1.11.1",
-    "rimraf": "^2.6.3",
-    "typescript": "^3.5.3"
-  },
-  "dependencies": {
-    "is-plain-object": "^3.0.0"
-  },
-  "peerDependencies": {},
   "scripts": {
-    "build": "npm run build:types && npm run build:cjs && npm run build:es",
-    "build:cjs": "babel src -d dist/cjs -x .js,.ts --ignore \"**/*.test.js\",\"**/test.js\",\"**/*.test.ts\",\"**/test.ts\" --delete-dir-on-start",
-    "build:es": "cross-env BABEL_ENV=es babel src -d dist/es -x .js,.ts  --ignore \"**/*.test.js\",\"**/test.js\",\"**/*.test.ts\",\"**/test.ts\" --delete-dir-on-start",
-    "build:types": "rimraf types && tsc -p tsconfig.json -d --outDir types  && rimraf types/**/*.js",
-    "check-types": "tsc --noEmit --isolatedModules -p tsconfig.json",
-    "format": "npm run format:cjs && npm run format:es && npm run format:src",
-    "format:cjs": "prettier --write \"dist/es/**/*.js\"",
-    "format:es": "prettier --write \"dist/es/**/*.js\"",
-    "format:src": "prettier --write \"src/**/*.{ts,js}\"",
-    "lint": "eslint src --ext .js,.ts",
+    "build": "npm run build:cjs && npm run build:es && npm run build:types",
+    "build:cjs": "babel src -d dist/cjs -x .ts --ignore \"**/*.test.ts\",\"**/test.ts\" --delete-dir-on-start",
+    "build:es": "babel src -d dist/es -x .ts --env-name es --ignore \"**/*.test.ts\",\"**/test.ts\" --delete-dir-on-start",
+    "build:types": "tsc -p tsconfig.json -d --outDir dist/es --emitDeclarationOnly && mkdir -p dist/cjs && cp -R dist/es/**.d.ts dist/cjs && rimraf dist/**/*.test.d.ts",
+    "check-types": "tsc --noEmit -p tsconfig.json",
+    "format": "prettier --write \"**/*.{ts,js,md,yml,json,babelrc,eslintrc,prettierrc}\"",
+    "lint": "eslint . --ext .ts",
     "prepublishOnly": "npm run lint && npm run test && npm run build && npm run format",
     "test": "jest",
-    "validate": "npm run check-types && npm run lint && npm run test -- --coverage && npm run format:src"
+    "validate": "npm run check-types && npm run lint && npm run test -- --coverage"
   },
   "husky": {
     "hooks": {
@@ -61,17 +40,31 @@
     }
   },
   "lint-staged": {
-    "src/**/*.{js,ts}": [
+    "**/*.{ts,js}": [
       "eslint",
-      "pretty-quick --staged"
+      "prettier --write"
+    ],
+    "**/*.{md,yml,json}": [
+      "prettier --write"
     ]
   },
-  "homepage": "https://github.com/jaredLunde/trie-memoize#readme",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jaredLunde/trie-memoize.git"
+  "devDependencies": {
+    "@lunde/babel-preset-es": "latest",
+    "@types/jest": "latest",
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
+    "cross-env": "latest",
+    "eslint": "latest",
+    "eslint-import-resolver-jest": "latest",
+    "eslint-plugin-jest": "latest",
+    "husky": "latest",
+    "jest": "latest",
+    "lint-staged": "latest",
+    "prettier": "latest",
+    "rimraf": "^2.6.3",
+    "ts-jest": "latest",
+    "typescript": "latest"
   },
-  "bugs": {
-    "url": "https://github.com/jaredLunde/trie-memoize/issues"
-  }
+  "dependencies": {},
+  "peerDependencies": {}
 }
