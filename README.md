@@ -9,6 +9,9 @@
   <a href="https://bundlephobia.com/result?p=trie-memoize">
     <img alt="Bundlephobia" src="https://img.shields.io/bundlephobia/minzip/trie-memoize?style=for-the-badge&labelColor=24292e">
   </a>
+  <a aria-label="Types" href="https://www.npmjs.com/package/@react-hook/mouse-position">
+    <img alt="Types" src="https://img.shields.io/npm/types/@react-hook/mouse-position?style=for-the-badge&labelColor=24292e">
+  </a>
   <a aria-label="Code coverage report" href="https://codecov.io/gh/jaredLunde/trie-memoize">
     <img alt="Code coverage" src="https://img.shields.io/codecov/c/gh/jaredLunde/trie-memoize?style=for-the-badge&labelColor=24292e">
   </a>
