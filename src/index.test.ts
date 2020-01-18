@@ -33,8 +33,8 @@ test('single argument -> object', () => {
 test('two arguments -> string', () => {
   for (const map1 of stringMaps) {
     for (const map2 of stringMaps) {
-      const fn = memoize([map1, map2], foo => {
-        return [foo]
+      const fn = memoize([map1, map2], (foo, bar) => {
+        return [foo, bar]
       })
 
       const result = fn('foo', 'bar')
@@ -49,8 +49,8 @@ test('two arguments -> string', () => {
 test('two arguments -> object', () => {
   for (const map1 of objectMaps) {
     for (const map2 of objectMaps) {
-      const fn = memoize([map1, map2], foo => {
-        return [foo]
+      const fn = memoize([map1, map2], (foo, bar) => {
+        return [foo, bar]
       })
 
       const valA = {},
@@ -68,8 +68,8 @@ test('several arguments -> string', () => {
   for (const map1 of stringMaps) {
     for (const map2 of stringMaps) {
       for (const map3 of stringMaps) {
-        const fn = memoize([map1, map2, map3], foo => {
-          return [foo]
+        const fn = memoize([map1, map2, map3], (foo, bar, baz) => {
+          return [foo, bar, baz]
         })
 
         const result = fn('foo', 'bar', 'baz')
@@ -86,8 +86,8 @@ test('several arguments -> object', () => {
   for (const map1 of objectMaps) {
     for (const map2 of objectMaps) {
       for (const map3 of objectMaps) {
-        const fn = memoize([map1, map2, map3], foo => {
-          return [foo]
+        const fn = memoize([map1, map2, map3], (foo, bar, baz) => {
+          return [foo, bar, baz]
         })
 
         const valA = {},

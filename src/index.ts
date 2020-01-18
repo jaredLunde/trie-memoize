@@ -98,18 +98,17 @@ const Cache = (constructors: CacheConstructor[]): Cache => {
   return {get, set}
 }
 
-function memoize(
+function memoize<T extends (...args: any[]) => any>(
   mapConstructors: CacheConstructor[],
-  fn: (...args: any[]) => any
-): (...args: any[]) => any {
+  fn: T
+): T {
   const cache = Cache(mapConstructors)
-
-  return function(): any {
+  return function() {
     const item = cache.get(arguments)
     return item === void 0
       ? cache.set(arguments, fn.apply(null, arguments))
       : item
-  }
+  } as T
 }
 
 export default memoize
