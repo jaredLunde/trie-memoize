@@ -34,35 +34,34 @@ const createCache = (obj: CacheConstructor): Cache => {
 const Cache = (constructors: CacheConstructor[]): Cache => {
   const depth = constructors.length,
     baseCache = createCache(constructors[0])
-  let get, set
+  let get: (args: IArguments) => any, set: (args: IArguments, value: any) => any
 
-  // quicker access for one and two-argument functions
-  if (depth === 1) {
-    get = (args: IArguments): any => baseCache.get(args[0])
-    set = (args: IArguments, v: any): any => {
-      baseCache.set(args[0], v)
-      return v
-    }
-  } else if (depth === 2) {
+  if (depth < 3) {
+    // quicker access for one and two-argument functions
+    const one = depth === 1
+
     get = (args: IArguments): any => {
       const base = baseCache.get(args[0])
-      return base === void 0 ? base : base.get(args[1])
+      return base === void 0 || one ? base : base.get(args[1])
     }
 
     set = (args: IArguments, value: any): any => {
-      const base = baseCache.get(args[0])
-      if (base === void 0) {
-        const map = createCache(constructors[1])
-        map.set(args[1], value)
-        baseCache.set(args[0], map)
-      } else {
-        base.set(args[1], value)
+      if (one) baseCache.set(args[0], value)
+      else {
+        const base = baseCache.get(args[0])
+        if (base === void 0) {
+          const map = createCache(constructors[1])
+          map.set(args[1], value)
+          baseCache.set(args[0], map)
+        } else {
+          base.set(args[1], value)
+        }
       }
 
       return value
     }
   } else {
-    let i, node
+    let i: number, node: typeof baseCache
 
     get = (args: IArguments): any => {
       node = baseCache
@@ -77,8 +76,9 @@ const Cache = (constructors: CacheConstructor[]): Cache => {
 
     set = (args: IArguments, value: any): any => {
       node = baseCache
+      const len = args.length
 
-      for (i = 0; i < args.length - 1; i++) {
+      for (i = 0; i < len - 1; i++) {
         let map: any = node.get(args[i])
 
         if (map === void 0) {
@@ -90,7 +90,7 @@ const Cache = (constructors: CacheConstructor[]): Cache => {
         }
       }
 
-      node.set(args[args.length - 1], value)
+      node.set(args[len - 1], value)
       return value
     }
   }
