@@ -18,7 +18,7 @@ test('single argument -> string', () => {
 
 test('single argument -> object', () => {
   for (const map of objectMaps) {
-    const fn = memoize([map], foo => {
+    const fn = memoize([map], (foo) => {
       return [foo]
     })
 

@@ -40,7 +40,7 @@ number of arguments is known and constant.
 ## Quick Start
 
 ```js
-const m1 = memoize([{}], v => v.toUpperCase())
+const m1 = memoize([{}], (v) => v.toUpperCase())
 m1('foo') // FOO uncached
 m1('foo') // FOO cached
 
