@@ -6,8 +6,8 @@ export declare type CacheConstructor =
   | WeakMapConstructor
   | MapLike
   | Record<any, any>
-declare function memoize<T extends (...args: any[]) => any>(
+declare const memoize: <T extends (...args: any[]) => any>(
   mapConstructors: CacheConstructor[],
   fn: T
-): T
+) => T
 export default memoize

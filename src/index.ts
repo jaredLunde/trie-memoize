@@ -36,76 +36,67 @@ const memo = (
 ): {s: Cache['set']; g: Cache['get']} => {
   const depth = constructors.length,
     baseCache = createCache(constructors[0])
-  let g: (args: IArguments) => any, s: (args: IArguments, value: any) => any
   let base: any
-
-  if (depth < 3) {
-    // quicker access for one and two-argument functions
-    const one = depth === 1
-
-    g = (args: IArguments): any =>
-      (base = baseCache.get(args[0])) === void 0 || one
-        ? base
-        : base.get(args[1])
-
-    s = (args: IArguments, value: any): any => {
-      if (one) baseCache.set(args[0], value)
-      else {
-        if ((base = baseCache.get(args[0])) === void 0) {
-          const map = createCache(constructors[1])
-          map.set(args[1], value)
-          baseCache.set(args[0], map)
-        } else {
-          base.set(args[1], value)
-        }
+  let map: any
+  let i: number
+  let node: typeof baseCache
+  const one = depth === 1
+  // quicker access for one and two-argument functions
+  const g1 = (args: IArguments): any =>
+    (base = baseCache.get(args[0])) === void 0 || one ? base : base.get(args[1])
+  const s1 = (args: IArguments, value: any): any => {
+    if (one) baseCache.set(args[0], value)
+    else {
+      if ((base = baseCache.get(args[0])) === void 0) {
+        map = createCache(constructors[1])
+        map.set(args[1], value)
+        baseCache.set(args[0], map)
+      } else {
+        base.set(args[1], value)
       }
-
-      return value
-    }
-  } else {
-    let i: number, node: typeof baseCache
-
-    g = (args: IArguments): any => {
-      node = baseCache
-
-      for (i = 0; i < args.length; i++)
-        if ((node = node.get(args[i])) === void 0) return
-
-      return node
     }
 
-    s = (args: IArguments, value: any): any => {
-      node = baseCache
-      const len = args.length
-      let map: any
-
-      for (i = 0; i < len - 1; i++) {
-        if ((map = node.get(args[i])) === void 0) {
-          map = createCache(constructors[i + 1])
-          node.set(args[i], map)
-          node = map
-        } else {
-          node = map
-        }
-      }
-
-      node.set(args[len - 1], value)
-      return value
-    }
+    return value
   }
 
-  return {g, s}
+  const g2 = (args: IArguments): any => {
+    node = baseCache
+
+    for (i = 0; i < depth; i++)
+      if ((node = node.get(args[i])) === void 0) return
+
+    return node
+  }
+
+  const s2 = (args: IArguments, value: any): any => {
+    node = baseCache
+
+    for (i = 0; i < depth - 1; i++) {
+      if ((map = node.get(args[i])) === void 0) {
+        map = createCache(constructors[i + 1])
+        node.set(args[i], map)
+        node = map
+      } else {
+        node = map
+      }
+    }
+
+    node.set(args[depth - 1], value)
+    return value
+  }
+
+  return depth < 3 ? {g: g1, s: s1} : {g: g2, s: s2}
 }
 
-function memoize<T extends (...args: any[]) => any>(
+const memoize = <T extends (...args: any[]) => any>(
   mapConstructors: CacheConstructor[],
   fn: T
-): T {
+): T => {
   let item: ReturnType<T>
-  const cache = memo(mapConstructors)
+  const {g, s} = memo(mapConstructors)
   return function () {
-    return (item = cache.g(arguments)) === void 0
-      ? cache.s(arguments, fn.apply(null, arguments))
+    return (item = g(arguments)) === void 0
+      ? s(arguments, fn.apply(null, arguments))
       : item
   } as T
 }
