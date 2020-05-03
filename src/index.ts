@@ -1,5 +1,5 @@
 export interface MapLike {
-  new (...args: any[])
+  new (...args: any[]): any
 }
 
 export type CacheConstructor =
@@ -18,7 +18,7 @@ const createCache = (obj: CacheConstructor): Cache => {
     // @ts-ignore
     return new obj()
   } catch (e) {
-    const cache = {}
+    const cache: Record<string, any> = {}
 
     return {
       set(k, v): void {
@@ -96,7 +96,7 @@ const memoize = <T extends (...args: any[]) => any>(
   const {g, s} = memo(mapConstructors)
   return function () {
     return (item = g(arguments)) === void 0
-      ? s(arguments, fn.apply(null, arguments))
+      ? s(arguments, fn.apply(null, arguments as any))
       : item
   } as T
 }

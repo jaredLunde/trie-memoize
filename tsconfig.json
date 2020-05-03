@@ -9,13 +9,13 @@
       // "dom.iterable"
     ],
     "moduleResolution": "node",
-    "strictNullChecks": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noFallthroughCasesInSwitch": true,
-    "noEmitOnError": true
+    "noEmitOnError": true,
+    "strict": true
   }
 }
