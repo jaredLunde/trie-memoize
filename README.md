@@ -63,12 +63,24 @@ m3(v1, v2, v3) // {}-"foo"-{} cached
 
 ## API
 
-### `memoize(caches: (MapLike | Record<any, any>)[], fn: (...args: any[]) => any)`
+### `memoize(caches, fn)`
 
-| Argument | Type        | Description                                                                                                                                                                                                                                                                                                                                                                                                     |
-| -------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| caches   | `MapLike[]` | An array of plain objects or map-like constructors (Map, WeakMap, some custom map w/ get + set methods) used for caching each level of the tree. The first array element will be the cache for the first argument of the function, call, and so on. Therefore, the length of this array must be the same as the length of arguments your memoized function accepts, or at least as deep as you'd like to cache. |
-| fn       | `Function`  | The function you'd like to memoize                                                                                                                                                                                                                                                                                                                                                                              |
+| Argument | Type                 | Description                                                                                                                                                                                                                                                                                                                                                                                                     |
+| -------- | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| caches   | `CacheConstructor[]` | An array of plain objects or map-like constructors (Map, WeakMap, some custom map w/ get + set methods) used for caching each level of the tree. The first array element will be the cache for the first argument of the function, call, and so on. Therefore, the length of this array must be the same as the length of arguments your memoized function accepts, or at least as deep as you'd like to cache. |
+| fn       | `(...args: T) => U`  | The function you'd like to memoize                                                                                                                                                                                                                                                                                                                                                                              |
+
+### Types
+
+#### CacheConstructor
+
+```ts
+export type CacheConstructor =
+  | MapConstructor
+  | WeakMapConstructor
+  | MapLike
+  | Record<any, any>
+```
 
 ## LICENSE
 

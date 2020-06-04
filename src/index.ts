@@ -88,17 +88,17 @@ const memo = (
   return depth < 3 ? {g: g1, s: s1} : {g: g2, s: s2}
 }
 
-const memoize = <T extends (...args: any[]) => any>(
+const memoize = <T extends any[], U extends any>(
   mapConstructors: CacheConstructor[],
-  fn: T
-): T => {
-  let item: ReturnType<T>
+  fn: (...args: T) => U
+): ((...args: T) => U) => {
+  let item: U
   const {g, s} = memo(mapConstructors)
   return function () {
     return (item = g(arguments)) === void 0
       ? s(arguments, fn.apply(null, arguments as any))
       : item
-  } as T
+  }
 }
 
 export default memoize
